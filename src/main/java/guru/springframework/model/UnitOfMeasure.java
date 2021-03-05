@@ -5,29 +5,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Created by jt on 6/13/17.
+ */
 @Entity
 public class UnitOfMeasure {
-    private String uom;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
-
-
-
-    public String getUom() {
-        return uom;
-    }
-
-    public void setUom(String uom) {
-        this.uom = uom;
-    }
+    private Long id;
+    private String description;
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
