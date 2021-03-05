@@ -1,43 +1,50 @@
 package guru.springframework.model;
 
-
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Created by jt on 6/13/17.
+ */
 @Entity
 public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private String description;
     private Integer prepTime;
     private Integer cookTime;
-    private Integer serveings;
+    private Integer servings;
     private String source;
     private String url;
     private String directions;
-    //todo add
-    //private Difficulty difficulty;
-                                            //each ingridient will have recipe assighned
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredient ;
+    private Set<Ingredient> ingredients;
 
-
-    @Lob //store large objects
+    @Lob
     private Byte[] image;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Notes note;
+    @Enumerated(value = EnumType.STRING)
+    private Difficulty difficulty;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Notes notes;
+
+    @ManyToMany
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getDescription() {
@@ -64,12 +71,12 @@ public class Recipe {
         this.cookTime = cookTime;
     }
 
-    public Integer getServeings() {
-        return serveings;
+    public Integer getServings() {
+        return servings;
     }
 
-    public void setServeings(Integer serveings) {
-        this.serveings = serveings;
+    public void setServings(Integer servings) {
+        this.servings = servings;
     }
 
     public String getSource() {
@@ -104,19 +111,35 @@ public class Recipe {
         this.image = image;
     }
 
-    public Notes getNote() {
-        return note;
+    public Notes getNotes() {
+        return notes;
     }
 
-    public void setNote(Notes note) {
-        this.note = note;
+    public void setNotes(Notes notes) {
+        this.notes = notes;
     }
 
-    public Set<Ingredient> getIngredient() {
-        return ingredient;
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredient(Set<Ingredient> ingredient) {
-        this.ingredient = ingredient;
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
